@@ -1,69 +1,76 @@
-# 📚 LibraTag
+# LibraTag 📚🔖
 
-**LibraTag** is a smart, RFID-based library book borrowing system designed to automate and secure the book lending process in educational institutions. The system uses RFID cards for students and RFID stickers on books to streamline transactions and eliminate human errors or misuse.
+**RFID-Based Smart Library Book Borrow/Return System**
+
+LibraTag is a low-cost, scalable system designed for institutes to automate library operations using RFID technology. Built with Arduino Uno, RC522 RFID reader, and simple LEDs, it enables secure and efficient book borrowing and returning.
 
 ---
 
 ## 🎯 Features
 
-- 🧠 Dual RFID logic: Student card activates session; book tags get linked within 3–5 seconds.
-- 🕐 Timed sessions: Automatically closes student session to prevent misuse.
-- 🚫 Tamper-resistant: If another student scans their ID mid-session, the previous session is force-closed.
-- ♻️ Unlimited books per session.
-- 💰 Low-cost hardware using Arduino Uno + RC522.
-- 🪛 Designed with budget-friendly jugaad in mind.
+- 🔐 **Student authentication** via RFID card
+- 📖 **Book tracking** using RFID tags
+- ⏱️ **Timed session** (3s) to avoid misuse
+- 🔄 **Force reset** on new student card scan
+- 🟢🟥 **LED feedback** for success/error
+- ✅ No book limit
+- ⚙️ Easily extensible to a Python/SQL backend or Firebase
 
 ---
 
-## 🛠️ Hardware Requirements
+## 🧰 Hardware Used
 
-| Component            | Quantity | Notes                            |
-|----------------------|----------|----------------------------------|
-| Arduino Uno (R3/R4)  | 1        | Any standard compatible board    |
-| RC522 RFID Reader    | 1        | 3.3V module                      |
-| RFID Card (13.56MHz) | 1+       | Student identity                 |
-| RFID Sticker (NFC)   | 5+       | Attach to books                  |
-| Jumper Wires         | -        | Male-to-female (for breadboard) |
-| Breadboard (optional)| 1        | For modular prototyping          |
-| USB Cable            | 1        | Arduino to PC connection         |
-
-> ⚠️ Power RC522 with **3.3V only**, not 5V.
-
----
-
-## 🔌 Wiring Diagram
-
-| RC522 Pin | Arduino UNO Pin |
-|-----------|-----------------|
-| SDA       | D10             |
-| SCK       | D13             |
-| MOSI      | D11             |
-| MISO      | D12             |
-| RST       | D7              |
-| GND       | GND             |
-| VCC       | 3.3V            |
+| Component               | Quantity |
+|-------------------------|----------|
+| Arduino Uno R3          | 1        |
+| RC522 RFID Module       | 1        |
+| RFID Card (Student ID)  | 1+       |
+| RFID Sticker/Tag (Book) | 1+       |
+| Red LED (Error)         | 1        |
+| Green LED (Success)     | 1        |
+| 220Ω Resistors          | 2        |
+| Jumper Wires + Breadboard| As needed |
 
 ---
 
-## 💻 Software Setup
+## 🔌 Wiring
 
-1. **Libraries Needed**
-   - [MFRC522](https://github.com/miguelbalboa/rfid)
-   - SPI (comes with Arduino IDE)
+### RC522 to Arduino
 
-2. **Upload Code**
-   - Use the `LibraTag.ino` file.
-   - Open Serial Monitor at `9600` baud.
-   - Place a student card, then scan book tags.
+| RC522 Pin | Arduino Uno Pin |
+|-----------|------------------|
+| SDA       | 10               |
+| SCK       | 13               |
+| MOSI      | 11               |
+| MISO      | 12               |
+| GND       | GND              |
+| RST       | 7                |
+| 3.3V      | 3.3V             |
 
-3. **Behavior**
-   - Scanning a student card opens a timed window (e.g., 5 sec).
-   - Any scanned book RFID within this window is linked to the student.
-   - Timeout auto-closes the session to avoid accidental borrowing.
+### LEDs
+
+| LED       | Pin   | Resistor | To   |
+|-----------|-------|----------|------|
+| Green     | D6    | 220Ω     | GND  |
+| Red       | D5    | 220Ω     | GND  |
 
 ---
 
-## 🔐 License
+## 🧪 Behavior
+
+1. Student scans card → session starts
+2. Books must be scanned within 3 seconds
+3. Each book scan checks:
+   - If not borrowed → it is marked *borrowed*
+   - If already borrowed → it is *returned*
+4. New student scan interrupts session
+5. LED Feedback:
+   - 🟢 Green = Success (borrow/return)
+   - 🔴 Red = Error (invalid action, timeout, etc.)
+
+---
+
+## 📜 License
 
 This project is licensed under the [MIT License](./LICENSE). You are free to use, modify, and distribute it with proper attribution.
 
