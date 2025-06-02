@@ -64,7 +64,7 @@
 ## 🧪 Behavior
 
 1. Student scans card → session starts
-2. Books must be scanned within 3 seconds
+2. Books must be scanned within 5 seconds
 3. Each book scan checks:
    - If not borrowed → it is marked *borrowed*
    - If already borrowed → it is *returned*
