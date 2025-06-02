@@ -1,35 +1,40 @@
-# LibraTag 📚🔖
+# 📚 LibraTag – RFID-Based Library Book Borrowing System with Offline History Logging
 
-**RFID-Based Smart Library Book Borrow/Return System**
-
-LibraTag is a low-cost, scalable system designed for institutes to automate library operations using RFID technology. Built with Arduino Uno, RC522 RFID reader, and simple LEDs, it enables secure and efficient book borrowing and returning.
+**LibraTag** is a smart, secure, and low-cost RFID-based library automation system designed for educational institutes. Built using Arduino, it allows students to borrow and return RFID-tagged books using their student ID card. It now features **offline transaction logging** to preserve all borrowing/return history—even without internet or a database.
 
 ---
 
-## 🎯 Features
+## 🚀 Features
 
-- 🔐 **Student authentication** via RFID card
-- 📖 **Book tracking** using RFID tags
-- ⏱️ **Timed session** (3s) to avoid misuse
-- 🔄 **Force reset** on new student card scan
-- 🟢🟥 **LED feedback** for success/error
-- ✅ No book limit
-- ⚙️ Easily extensible to a Python/SQL backend or Firebase
+- ✅ RFID student card & book tag detection using RC522
+- ✅ Session-based control (5 seconds)
+- ✅ Borrow/Return identification logic
+- ✅ Unlimited book borrow capability
+- ✅ Secure session closure on timeout or new user scan
+- ✅ LED & Buzzer for visual/audio feedback
+- ✅ Offline transaction history storage
+  - ➕ SD card logging *(preferred)*
+  - ➕ EEPROM backup *(fallback or budget solution)*
+- ✅ Error handling: wrong scan order, duplicate borrow, unauthorized UID
+- ✅ Modular, maintainable codebase
 
 ---
 
-## 🧰 Hardware Used
+## 🛠️ Hardware Requirements
 
-| Component               | Quantity |
-|-------------------------|----------|
-| Arduino Uno R3          | 1        |
-| RC522 RFID Module       | 1        |
-| RFID Card (Student ID)  | 1+       |
-| RFID Sticker/Tag (Book) | 1+       |
-| Red LED (Error)         | 1        |
-| Green LED (Success)     | 1        |
-| 220Ω Resistors          | 2        |
-| Jumper Wires + Breadboard| As needed |
+| Component              | Quantity |
+|-----------------------|----------|
+| Arduino Uno R3 / R4   | 1        |
+| MFRC522 RFID Module   | 1        |
+| RFID Cards            | As needed (students) |
+| RFID Stickers (Tags)  | As needed (books) |
+| SD Card Module        | 1        |
+| Micro SD Card (≥ 1 GB preferred) | 1 |
+| Green LED                        | 1        |
+| Red LED                          | 1        |
+| Passive 5V Buzzer                | 1        |
+| Breadboard + Jumper Wires        | ~20      |
+| Optional: EEPROM chip     | 1        |
 
 ---
 
@@ -69,13 +74,28 @@ LibraTag is a low-cost, scalable system designed for institutes to automate libr
    - 🔴 Red = Error (invalid action, timeout, etc.)
 
 ---
+## 🧠 How It Works
 
-## 📜 License
+### Workflow
 
-This project is licensed under the [MIT License](./LICENSE). You are free to use, modify, and distribute it with proper attribution.
+1. **Student Scans ID**: Session opens for 5 seconds.
+2. **Books Scanned**: Borrow or return logic is triggered.
+3. **Logs Written**: Each transaction (borrow/return) is saved to `log.txt` on SD card.
+4. **Visual/Auditory Feedback**: Green LED for success, red + buzzer for error.
+5. **New Scan?**: New student UID auto-closes old session.
+6. **Timeout?**: Session closes after 5 seconds of inactivity.
 
 ---
 
+## ⚙️ Setup Instructions
+
+1. Connect RFID module, LEDs, and buzzer as per the wiring guide.
+2. Format SD card to FAT32 and insert into SD module.
+3. Upload code via Arduino IDE.
+4. Open Serial Monitor for real-time debug logs.
+5. Start scanning student ID cards followed by books.
+
+---
 ## 👤 Author
 
 Developed by **Shadow leaked**  &  **Silvia Khumukcham**  
@@ -83,18 +103,20 @@ BCA Minor Project | India 🇮🇳
 Contact: shadowleaked@gmail.com & khsilvia8@gmail.com
 
 ---
+## 🔐 License
 
-## 🙌 Contributions
+This project is licensed under the **MIT License**.  
+You are free to use, modify, and distribute this for educational or personal use.
 
-Pull requests are welcome! If you'd like to improve the project or add features (like database logging, LCD display, or Wi-Fi integration), feel free to fork and contribute.
+---
+## 🧱 Future Upgrades
+
+- 📡 Firebase integration for remote database
+- 🧑‍🏫 Admin master card for manual overrides
+- 📱 Mobile/Web interface for students
+- 📖 LCD/OLED display for book status
 
 ---
 
-## ✅ Future Scope
-
-- Integration with Google Sheets via ESP32
-- Web dashboard for librarians
-- SMS/email notification on borrowing
-
+> “A well-managed library reflects a well-managed mind.” – LibraTag Team
 ---
-
