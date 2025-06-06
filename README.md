@@ -1,122 +1,133 @@
-# 📚 LibraTag – RFID-Based Library Book Borrowing System with Offline History Logging
+# LibraTag  
+*A Secure, Scalable RFID-Based Library Management System*
 
-**LibraTag** is a smart, secure, and low-cost RFID-based library automation system designed for educational institutes. Built using Arduino, it allows students to borrow and return RFID-tagged books using their student ID card. It now features **offline transaction logging** to preserve all borrowing/return history—even without internet or a database.
-
----
-
-## 🚀 Features
-
-- ✅ RFID student card & book tag detection using RC522
-- ✅ Session-based control (5 seconds)
-- ✅ Borrow/Return identification logic
-- ✅ Unlimited book borrow capability
-- ✅ Secure session closure on timeout or new user scan
-- ✅ LED & Buzzer for visual/audio feedback
-- ✅ Offline transaction history storage
-  - ➕ SD card logging *(preferred)*
-  - ➕ EEPROM backup *(fallback or budget solution)*
-- ✅ Error handling: wrong scan order, duplicate borrow, unauthorized UID
-- ✅ Modular, maintainable codebase
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/LibraTag/LibraTag/actions)  
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)  
+[![Platform](https://img.shields.io/badge/platform-Arduino-orange.svg)](https://www.arduino.cc/)  
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://makeapullrequest.com)  
+[![Open Source Love](https://img.shields.io/badge/open%20source-%E2%9D%A4-red.svg)](https://opensource.org)
 
 ---
 
-## 🛠️ Hardware Requirements
-
-| Component              | Quantity |
-|-----------------------|----------|
-| Arduino Uno R3 / R4   | 1        |
-| MFRC522 RFID Module   | 1        |
-| RFID Cards            | As needed (students) |
-| RFID Stickers (Tags)  | As needed (books) |
-| SD Card Module        | 1        |
-| Micro SD Card (≥ 1 GB preferred) | 1 |
-| Green LED                        | 1        |
-| Red LED                          | 1        |
-| Passive 5V Buzzer                | 1        |
-| Breadboard + Jumper Wires        | ~20      |
-| Optional: EEPROM chip     | 1        |
+> “Making library automation truly accessible with low-cost hardware and intelligent design.”
 
 ---
 
-## 🔌 Wiring
+## 📚 Overview
 
-### RC522 to Arduino
+**LibraTag** is a robust, low-cost RFID-based system designed for managing book borrowing and returns in academic or public libraries. Powered by Arduino, it eliminates manual logbooks and leverages RFID, session security, and storage modules to automate workflows — while staying affordable and flexible.
 
-| RC522 Pin | Arduino Uno Pin |
-|-----------|------------------|
-| SDA       | 10               |
-| SCK       | 13               |
-| MOSI      | 11               |
-| MISO      | 12               |
-| GND       | GND              |
-| RST       | 7                |
-| 3.3V      | 3.3V             |
-
-### LEDs
-
-| LED       | Pin   | Resistor | To   |
-|-----------|-------|----------|------|
-| Green     | D6    | 220Ω     | GND  |
-| Red       | D5    | 220Ω     | GND  |
+This project is ideal for institutions in need of efficient resource management without enterprise-level infrastructure.
 
 ---
 
-## 🧪 Behavior
+## 🔑 Features
 
-1. Student scans card → session starts
-2. Books must be scanned within 5 seconds
-3. Each book scan checks:
-   - If not borrowed → it is marked *borrowed*
-   - If already borrowed → it is *returned*
-4. New student scan interrupts session
-5. LED Feedback:
-   - 🟢 Green = Success (borrow/return)
-   - 🔴 Red = Error (invalid action, timeout, etc.)
+- ✅ **RFID-based Identity Management**  
+  Assign unique UIDs to students and books using RFID cards/stickers.
 
----
-## 🧠 How It Works
+- ✅ **Secure Session Handling**  
+  Prevent unauthorized scans using auto-expiring session windows.
 
-### Workflow
+- ✅ **Visual & Audio Feedback**  
+  LED indicators and a 5V buzzer show real-time operation status.
 
-1. **Student Scans ID**: Session opens for 5 seconds.
-2. **Books Scanned**: Borrow or return logic is triggered.
-3. **Logs Written**: Each transaction (borrow/return) is saved to `log.txt` on SD card.
-4. **Visual/Auditory Feedback**: Green LED for success, red + buzzer for error.
-5. **New Scan?**: New student UID auto-closes old session.
-6. **Timeout?**: Session closes after 5 seconds of inactivity.
+- ✅ **Borrow / Return Logic**  
+  Automatic check-in/check-out by UID recognition and book status.
 
----
+- ✅ **Admin Override Support**  
+  Special card/tag can override rules to manage conflicts.
 
-## ⚙️ Setup Instructions
+- ✅ **SD Card Data Logging**  
+  Logs all borrowing/return activity with timestamps.
 
-1. Connect RFID module, LEDs, and buzzer as per the wiring guide.
-2. Format SD card to FAT32 and insert into SD module.
-3. Upload code via Arduino IDE.
-4. Open Serial Monitor for real-time debug logs.
-5. Start scanning student ID cards followed by books.
+- ✅ **RTC Clock Integration (DS3231)**  
+  Ensures accurate time-logging for each transaction.
 
----
-## 👤 Author
-
-Developed by **Shadow leaked**  &  **Silvia Khumukcham**  
-BCA Minor Project | India 🇮🇳  
-Contact: shadowleaked@gmail.com & khsilvia8@gmail.com
-
----
-## 🔐 License
-
-This project is licensed under the **MIT License**.  
-You are free to use, modify, and distribute this for educational or personal use.
-
----
-## 🧱 Future Upgrades
-
-- 📡 Firebase integration for remote database
-- 🧑‍🏫 Admin master card for manual overrides
-- 📱 Mobile/Web interface for students
-- 📖 LCD/OLED display for book status
+- ✅ **EEPROM/SD Storage Option**  
+  Choice between persistent memory for metadata and logs.
 
 ---
 
+## 🔧 Hardware Requirements
+
+| Component               | Quantity | Description                                |
+|------------------------|----------|--------------------------------------------|
+| Arduino UNO R3 (clone) | 1        | Main controller                            |
+| RC522 RFID Reader      | 1        | Reads student and book tags                |
+| RFID Tags/Stickers     | Many     | Placed on each book                        |
+| RFID Cards/Keychains   | ≥ 1      | Assigned to students and admin             |
+| 5V Active Buzzer       | 1        | Emits tone for errors or confirmations     |
+| Green LED              | 1        | Indicates success (e.g., book borrowed)    |
+| Red LED                | 1        | Indicates error or invalid action          |
+| 220Ω Resistors         | 2        | Used with LEDs to limit current            |
+| SD Card Module         | 1        | Optional: log transactions to SD           |
+| Micro SD Card (≥2 GB)  | 1        | Storage medium                             |
+| RTC Module (DS3231)    | 1        | Adds time-keeping for logs                 |
+| Breadboard + Jumper Wires| N      | For prototyping                            |
+| 3D Printed/Custom Enclosure | 1   | Optional: project case for deployment      |
+
+---
+
+## 🚦 System Flow
+
+1. **Student scans RFID card**  
+   → Session starts (5s window to scan books)
+
+2. **Book tag scanned**  
+   → If not borrowed → marked as borrowed  
+   → If already borrowed by same student → returned  
+   → If borrowed by someone else → error
+
+3. **Session expires in 5s or on new student scan**  
+   → Resets system
+
+4. **LED/Buzzer feedback**  
+   → Green = Success  
+   → Red + Buzz = Error
+
+5. **All actions logged (if SD & RTC present)**
+
+---
+
+## 💾 Data Logging (Optional)
+
+If SD card and RTC are present, each scan operation is recorded with:
+
+```csv
+[DATE], [TIME], [ACTION], [STUDENT_UID], [BOOK_UID], [BOOK_TITLE]
+```
+
+Helps build history, detect misuse, and audit lending activity.
+
+## 🛠 Setup
+
+- Flash Arduino UNO with `libra_tag.ino`
+- Connect RC522, LEDs, buzzer, and optionally SD & RTC modules
+- Configure UID list of students and books in the code
+- Power up and monitor via Serial or logs
+- Scan student → scan book(s) → done
+
+## 🛡 License
+
+This project is licensed under the **GNU General Public License v3.0**  
+See [LICENSE](./LICENSE) for details.
+
+© 2025 **LibraTag Team**  
+All rights reserved. License headers embedded in code are non-removable per GPLv3.
+
+## 🙌 Contributing
+
+Want to improve it? Add support for LCDs? Web syncing?  
+[Pull Requests Welcome](https://github.com/shadow-leaked/LibraTag/pulls)
+
+## 📌 Future Enhancements
+
+- 🔗 **WiFi sync** to a remote database (ESP32)
+- 📟 **LCD display** for user messages
+- 🧪 **Web-based book admin dashboard**
+- 📤 **Remote admin override**
+
+---
 > “A well-managed library reflects a well-managed mind.” – LibraTag Team
 ---
