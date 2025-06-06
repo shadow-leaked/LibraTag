@@ -4,7 +4,7 @@
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/LibraTag/LibraTag/actions)  
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)  
 [![Platform](https://img.shields.io/badge/platform-Arduino-orange.svg)](https://www.arduino.cc/)  
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://makeapullrequest.com)  
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/shadow-leaked/LibraTag/pulls)  
 [![Open Source Love](https://img.shields.io/badge/open%20source-%E2%9D%A4-red.svg)](https://opensource.org)
 
 ---
